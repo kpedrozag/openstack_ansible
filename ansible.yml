@@ -23,7 +23,11 @@
           state: present
           filename: ./xenial-server-cloudimg-amd64-disk1.img
           is_public: yes
-      - name: Create keypar
+      - name: create local keypair
+        shell: ssh-keygen -b 2048 -t rsa -f /opt/stack/.ssh/myid_rsa -q -N ""
+        args:
+          creates: /opt/stack/.ssh/myid_rsa
+      - name: Create keypair
         os_keypar:
           name: {{ key_name }}
           auth:
@@ -32,7 +36,7 @@
             password: {{ pass }}
             project_name: {{ admin }}
           state: present
-          public_key_file: /opt/stack/.ssh/id_rsa.pub
+          public_key_file: /opt/stack/.ssh/myid_rsa.pub
       - name: Create the Instance of Ubuntu Xenial
         os_server:
           name: {{ instance_name }}
