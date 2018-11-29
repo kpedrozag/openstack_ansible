@@ -1,0 +1,5 @@
+---
+# tasks file for first
+  - include: upload.yml
+  - include: keypar.yml
+  - include: create_instance.yml

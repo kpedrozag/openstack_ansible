@@ -1,0 +1,5 @@
+---
+  - name: Testing Openstack + Ansible
+    hosts: localhost
+    roles:
+      - first
