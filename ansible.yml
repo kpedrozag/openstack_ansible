@@ -1,0 +1,49 @@
+---
+  - name: Testing Openstack + Ansible
+    hosts: localhost
+    vars:
+      url_to_auth: http://172.16.5.187/identity/v3
+      user: admin
+      pass: secret
+      prj_name: admin
+      image_name: ubuntu_xenial
+      instance_name: ubuntu_xenial_1
+      key_name: mykey
+    tasks:
+      - name: Upload the local image to glance
+        os_image:
+          auth:
+            auth_url: {{ url_to_auth }}
+            username: {{ user }}
+            password: {{ pass }}
+            project_name: {{ prj_name }}
+          name: {{ image_name }}
+          container_format: bare
+          disk_format: qcow2
+          state: present
+          filename: ./xenial-server-cloudimg-amd64-disk1.img
+          is_public: yes
+      - name: Create keypar
+        os_keypar:
+          name: {{ key_name }}
+          auth:
+            auth_url: {{ url_to_auth }}
+            username: {{ user }}
+            password: {{ pass }}
+            project_name: {{ admin }}
+          state: present
+          public_key_file: /opt/stack/.ssh/id_rsa.pub
+      - name: Create the Instance of Ubuntu Xenial
+        os_server:
+          name: {{ instance_name }}
+          auth:
+            auth_url: {{ url_to_auth }}
+            username: {{ user }}
+            password: {{ pass }}
+            project_name: {{ prj_name }}
+          image: {{ image_name }}
+          flavor: 2
+          key_name: {{ key_name }}
+          timeout: 300
+          auto_ip: yes
+          state: present
