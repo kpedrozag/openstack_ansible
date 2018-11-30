@@ -1,2 +1,30 @@
 ---
-# handlers file for first
+  - name: Create the Instance of Ubuntu Xenial
+    os_server:
+      auth:
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      name: "{{ instance_name }}"
+      state: absent
+  - name: Remove the openstack keypair
+    os_keypair:
+      name: "{{ key_name }}"
+      auth:
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      state: absent
+  - name: Remove the keys
+    command: rm /opt/stack/.ssh/my*
+  - name: Remove the image
+    os_image:
+      auth:
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      name: "{{ image_name }}"
+      state: absent

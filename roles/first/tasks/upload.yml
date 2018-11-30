@@ -1,14 +1,16 @@
 ---
-- name: Upload the local image to glance
-  os_image:
-    auth:
-      auth_url: {{ url_to_auth }}
-      username: {{ user }}
-      password: {{ pass }}
-      project_name: {{ prj_name }}
-    name: {{ image_name }}
-    container_format: bare
-    disk_format: qcow2
-    state: present
-    filename: xenial-server-cloudimg-amd64-disk1.img
-    is_public: yes
+  - name: Download the image
+    command: wget http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+  - name: Upload the local image to glance
+    os_image:
+      auth:
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      name: "{{ image_name }}"
+      container_format: bare
+      disk_format: qcow2
+      state: present
+      filename: ./xenial-server-cloudimg-amd64-disk1.img
+      is_public: yes

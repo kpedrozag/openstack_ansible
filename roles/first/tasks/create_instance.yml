@@ -1,15 +1,15 @@
 ---
   - name: Create the Instance of Ubuntu Xenial
     os_server:
-      name: {{ instance_name }}
+      name: "{{ instance_name }}"
       auth:
-        auth_url: {{ url_to_auth }}
-        username: {{ user }}
-        password: {{ pass }}
-        project_name: {{ prj_name }}
-      image: {{ image_name }}
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      image: "{{ image_name }}"
       flavor: 2
-      key_name: {{ key_name }}
+      key_name: "{{ key_name }}"
       timeout: 300
       auto_ip: yes
       state: present

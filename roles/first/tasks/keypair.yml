@@ -1,0 +1,13 @@
+---
+  - name: create local keypair
+    command: ssh-keygen -b 2048 -t rsa -f /opt/stack/.ssh/myid_rsa -q -N ""
+  - name: Create keypair
+    os_keypair:
+      name: "{{ key_name }}"
+      auth:
+        auth_url: "{{ url_to_auth }}"
+        username: "{{ user }}"
+        password: "{{ passw }}"
+        project_name: "{{ prj_name }}"
+      state: present
+      public_key_file: /opt/stack/.ssh/myid_rsa.pub
