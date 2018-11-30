@@ -2,9 +2,9 @@
   - name: Testing Openstack + Ansible
     hosts: localhost
     vars:
-      url_to_auth: http://172.16.5.187/identity/v3
+      url_to_auth: http://172.16.5.221/identity/v3
       user: admin
-      pass: secret
+      passw: secret
       prj_name: admin
       image_name: ubuntu_xenial
       instance_name: ubuntu_xenial_1
@@ -13,41 +13,39 @@
       - name: Upload the local image to glance
         os_image:
           auth:
-            auth_url: {{ url_to_auth }}
-            username: {{ user }}
-            password: {{ pass }}
-            project_name: {{ prj_name }}
-          name: {{ image_name }}
+            auth_url: "{{ url_to_auth }}"
+            username: "{{ user }}"
+            password: "{{ passw }}"
+            project_name: "{{ prj_name }}"
+          name: "{{ image_name }}"
           container_format: bare
           disk_format: qcow2
           state: present
           filename: ./xenial-server-cloudimg-amd64-disk1.img
           is_public: yes
       - name: create local keypair
-        shell: ssh-keygen -b 2048 -t rsa -f /opt/stack/.ssh/myid_rsa -q -N ""
-        args:
-          creates: /opt/stack/.ssh/myid_rsa
+        command: ssh-keygen -b 2048 -t rsa -f /opt/stack/.ssh/myid_rsa -q -N ""
       - name: Create keypair
-        os_keypar:
-          name: {{ key_name }}
+        os_keypair:
+          name: "{{ key_name }}"
           auth:
-            auth_url: {{ url_to_auth }}
-            username: {{ user }}
-            password: {{ pass }}
-            project_name: {{ admin }}
+            auth_url: "{{ url_to_auth }}"
+            username: "{{ user }}"
+            password: "{{ passw }}"
+            project_name: "{{ prj_name }}"
           state: present
           public_key_file: /opt/stack/.ssh/myid_rsa.pub
       - name: Create the Instance of Ubuntu Xenial
         os_server:
-          name: {{ instance_name }}
+          name: "{{ instance_name }}"
           auth:
-            auth_url: {{ url_to_auth }}
-            username: {{ user }}
-            password: {{ pass }}
-            project_name: {{ prj_name }}
-          image: {{ image_name }}
+            auth_url: "{{ url_to_auth }}"
+            username: "{{ user }}"
+            password: "{{ passw }}"
+            project_name: "{{ prj_name }}"
+          image: "{{ image_name }}"
           flavor: 2
-          key_name: {{ key_name }}
+          key_name: "{{ key_name }}"
           timeout: 300
           auto_ip: yes
           state: present
