@@ -2,7 +2,7 @@
   - name: Testing Openstack + Ansible
     hosts: localhost
     vars:
-      url_to_auth: http://172.16.5.221/identity/v3
+      url_to_auth: http://172.16.5.216/identity/v3
       user: admin
       passw: secret
       prj_name: admin
@@ -10,6 +10,8 @@
       instance_name: ubuntu_xenial_1
       key_name: mykey
     tasks:
+      - name: Download the image
+        command: wget http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
       - name: Upload the local image to glance
         os_image:
           auth:
