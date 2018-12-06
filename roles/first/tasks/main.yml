@@ -1,4 +1,5 @@
 ---
+  - include: download.yml
   - include: upload.yml
   - include: keypair.yml
   - include: create_instance.yml

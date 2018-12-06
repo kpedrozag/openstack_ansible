@@ -1,0 +1,3 @@
+---
+  - name: Download the image
+    command: wget http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img

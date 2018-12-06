@@ -1,12 +1,9 @@
 ---
 # vars file for first
-url_to_auth: http://172.16.5.187/identity/v3
+url_to_auth: http://172.16.5.221/identity/v3
 user: admin
-pass: secret
+passw: secret
 prj_name: admin
-
 image_name: ubuntu_xenial
-
 instance_name: ubuntu_xenial_1
-
 key_name: mykey
